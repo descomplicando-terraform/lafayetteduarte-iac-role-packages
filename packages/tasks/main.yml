@@ -3,11 +3,11 @@
   ansible.builtin.service:
     name: "{{ datetime_service }}"
     state: restarted
-  when: restart_time_sync | bool
+  when: (restart_time_sync is defined) and (restart_time_sync | bool)
 
 - name: Instalando Repositorios e Chaves
   ansible.builtin.import_tasks: apt-repos.yml
-  when:  (packages.apt_repos is defined)
+  when: (packages.apt_repos is defined)
 
 - name: APT Packages
   ansible.builtin.import_tasks: apt-packages.yml
